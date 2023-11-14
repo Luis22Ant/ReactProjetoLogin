@@ -1,6 +1,7 @@
 // src/components/LoginForm.js
 import React, { useState } from 'react';
 import AuthService from './AuthService';
+import styles from './LoginForm.module.css';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -18,20 +19,21 @@ function LoginForm() {
   };
 
   return (
-    <div>
+    <div className={styles.ajusteTeste}>
       <label>
-        Usuário:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" placeholder='Usuário' className={styles.loginForm} value={username} onChange={(e) => setUsername(e.target.value)} />
       </label>
-      <br />
       <label>
-        Senha:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" className={styles.loginForm} placeholder='Senha' value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
-      <br />
-      <button onClick={handleLogin}>Entrar</button>
+      <div className={styles.divButton}>
+        <button onClick={handleLogin}>Entrar</button>
+      </div>
+
     </div>
   );
 }
+
+
 
 export default LoginForm;
