@@ -1,11 +1,14 @@
 // src/components/LoginForm.js
 import React, { useState } from 'react';
-import AuthService from './AuthService';
-import styles from './LoginForm.module.css';
+import AuthService from '../Services/AuthService';
+import styles from '../LoginForm.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -18,6 +21,10 @@ function LoginForm() {
     }
   };
 
+  const telaCadastro =()=>{
+    navigate('/cadastro')
+  }
+
   return (
     <div className={styles.ajusteTeste}>
       <label>
@@ -27,7 +34,8 @@ function LoginForm() {
         <input type="password" className={styles.loginForm} placeholder='Senha' value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <div className={styles.divButton}>
-        <button onClick={handleLogin}>Entrar</button>
+        <button onClick={handleLogin}>Entrar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button onClick={telaCadastro}>Cadastrar</button>
       </div>
 
     </div>
