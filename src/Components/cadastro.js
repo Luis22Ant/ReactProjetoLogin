@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AuthService from '../Services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const CadastroForm = () => {
   const [formValues, setFormValues] = useState({
@@ -7,8 +8,14 @@ const CadastroForm = () => {
     Senha: '',
     Tipo: '',
     CPF: '',
-    DataNascimento:''
+    DataNascimento: '',
   });
+
+  const navigate = useNavigate();
+
+  const botaoVoltar = () => {
+    navigate('/login');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +27,7 @@ const CadastroForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       // Chamar o método AuthService.cadastro com os dados do formulário
       const response = await AuthService.cadastro(
@@ -40,35 +47,39 @@ const CadastroForm = () => {
   };
 
   return (
-    <div>
-      <h1>Cadastro</h1>
+    <div className="container">
+      <h1 >Cadastrar Usuário</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Usuario:
-          <input type="text" name="Usuario" value={formValues.Usuario} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Senha:
-          <input type="password" name="Senha" value={formValues.Senha} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Tipo:
-          <input type="text" name="Tipo" value={formValues.Tipo} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          CPF:
-          <input type="text" name="CPF" value={formValues.CPF} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          DataNascimento:
-          <input type="text" name="DataNascimento" value={formValues.DataNascimento} onChange={handleChange} />
-        </label>
-        <br />
-        <button type="submit">Cadastrar</button>
+        <div className="col-md-2">
+          <label className="form-label">Usuário:</label>
+          <input type="text" className="form-control" name="Usuario" value={formValues.Usuario} onChange={handleChange} />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">Senha:</label>
+          <input type="password" className="form-control" name="Senha" value={formValues.Senha} onChange={handleChange} />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">CPF:</label>
+          <input type="text" className="form-control" name="CPF" value={formValues.CPF} onChange={handleChange} />
+        </div>
+        <div className="col-md-2" >
+          <label className="form-label">Data de Nascimento:</label>
+          <input type="text" className="form-control" name="DataNascimento" value={formValues.DataNascimento} onChange={handleChange} />
+        </div>
+        <div className="col-md-2" style={{ marginBottom: '2vh' }}>
+          <label className="form-label"></label>
+          <select type="text" className="form-control" name="Tipo" value={formValues.Tipo} onChange={handleChange}>
+            <option value="">Tipo</option>
+            <option value="admin">Admin</option>
+            <option value="usuario">Usuário</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Confirmar
+        </button>&nbsp;&nbsp;&nbsp;
+        <button onClick={botaoVoltar} type="submit" className="btn btn-secondary">
+          Voltar
+        </button>
       </form>
     </div>
   );

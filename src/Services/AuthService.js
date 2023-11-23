@@ -12,14 +12,14 @@ class AuthService {
           usuario,
           senha,
         }),
-        
+
       });
 
 
 
       if (!response.ok) {
         throw new Error('Login failed');
-      }else{
+      } else {
         console.log("Deu certo!")
       }
 
@@ -33,7 +33,7 @@ class AuthService {
 
   static async cadastro(usuario, senha, tipo, cpf, dataNascimento) {
     const apiUrl = 'https://localhost:7201/api/Login/cadastro';
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -48,13 +48,13 @@ class AuthService {
           dataNascimento
         }),
       });
-  
+
       // Agora, aguardamos a resposta do servidor usando response.json()
       const responseData = await response.json();
-      
+
       // Exiba a resposta no console para fins de depuração
       console.log('Resposta do servidor:', responseData);
-  
+
       if (!response.ok) {
         // Se a resposta não estiver ok, lance um erro
         throw new Error('Login failed');
@@ -68,7 +68,7 @@ class AuthService {
       throw new Error('Login failed');
     }
   }
-  
+
 
 
 }
