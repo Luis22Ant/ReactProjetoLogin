@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthService from '../Services/AuthService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@fortawesome/fontawesome-svg-core/styles.css'; // Importe este arquivo para garantir que os estilos sejam aplicados corretamente
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import styles from '../LoginForm.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null); // Adicionado estado para controlar a mensagem de erro
 
   const navigate = useNavigate();
 
@@ -19,7 +20,8 @@ function LoginForm() {
       // Você pode adicionar lógica aqui, como redirecionar para outra página após o login bem-sucedido.
     } catch (error) {
       console.error('Login failed', error);
-      // Lógica para lidar com falhas no login, como exibir uma mensagem de erro.
+      // Atualiza o estado do erro para exibir a mensagem
+      setError('Usuário não cadastrado!');
     }
   };
 
@@ -31,12 +33,9 @@ function LoginForm() {
     <div className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
       <div className={styles.ajusteTeste}>
         <div style={{ textAlign: 'center', marginBottom: '2vh' }}>
-
           <FontAwesomeIcon icon={faStore} style={{ height: '20vh' }} />
-
         </div>
         <div className="input-group col-md-3">
-
           <input
             type="text"
             placeholder="Usuário"
@@ -45,7 +44,7 @@ function LoginForm() {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className='input-group  col-md-3'>
+        <div className='input-group col-md-3'>
           <input
             type="password"
             className={`form-control ${styles.loginForm}`}
@@ -54,8 +53,12 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
-
+        {/* Exibe a mensagem de erro se houver um erro */}
+        {error && (
+          <div style={{ marginBottom: '1vh', textAlign: 'center', color: 'red', fontSize: '14px' }}>
+            {error}
+          </div>
+        )}
         <div className={styles.divButton}>
           <button className="btn btn-primary" onClick={handleLogin}>
             Entrar

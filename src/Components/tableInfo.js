@@ -23,6 +23,9 @@ const Table = () => {
   const botaoSair = () => {
     navigate('/login');
   }
+  const botaoIncluir = () => {
+    navigate('/cadastroProduto')
+  }
   const tabelaEstilo = {
     border: '1px solid black',
     borderCollapse: 'collapse',
@@ -66,7 +69,7 @@ const Table = () => {
         </li>
       </nav>
 
-      <button className='btn btn-primary' style={{ marginBottom: '2vh', width: '10vh', marginLeft: '2vh', marginTop: '2vh' }}>Incluir</button>
+      <button className='btn btn-primary' style={{ marginBottom: '2vh', width: '10vh', marginLeft: '2vh', marginTop: '2vh' }} onClick={botaoIncluir}>Incluir</button>
 
       <h2 style={{ marginLeft: '2vh' }}>Tabela de Produtos</h2>
       <table style={tabelaEstilo}>
