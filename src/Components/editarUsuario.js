@@ -16,8 +16,6 @@ const CadastroEdit = () => {
         dataNascimento: '',
     });
     
-
-    // Obtenha o id dos parâmetros de rota
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -59,10 +57,9 @@ const CadastroEdit = () => {
             );
 
             console.log('Atualizado com sucesso', response);
-            // Você pode adicionar lógica aqui, como redirecionar para outra página após a atualização bem-sucedida.
+    
         } catch (error) {
             console.error('Erro na atualização', error);
-            // Lógica para lidar com falhas na atualização, como exibir uma mensagem de erro.
         }
     };
 

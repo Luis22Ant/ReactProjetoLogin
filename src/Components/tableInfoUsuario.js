@@ -4,6 +4,7 @@ import { faPencil, faTrash, faUser, faRightFromBracket } from '@fortawesome/free
 import styles from '../Table.module.css';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import AuthService from '../Services/AuthService';
 
 const TableUsuario = () => {
   const [data, setData] = useState([]);
@@ -30,12 +31,8 @@ const TableUsuario = () => {
     navigate('/login');
   };
 
-  const filtrarTipo = () => {
-    try {
-
-    } catch (erro) {
-
-    }
+  const filtrarTipo = async (tipoUsuario) => {
+  
   }
 
 
@@ -45,9 +42,6 @@ const TableUsuario = () => {
 
   const deletarRegistro = async (id) => {
     try {
-      // Adicione a lógica de exclusão aqui
-
-      // Após a exclusão bem-sucedida, recarrega os dados ou atualiza o estado conforme necessário
       const response = await axios.delete(`https://localhost:7201/api/login/${id}`);
       console.log('Delete successful', response);
       const newData = data.filter(item => item.id !== id);
@@ -124,14 +118,14 @@ const TableUsuario = () => {
         </div>
         <div className='col-md-4' style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
           <div style={{ marginRight: '2vh' }}>
-            <select value={tipoUsuario} onChange={handleTipoUsuarioChange}>
+            <select style={{ border: '1px solid black' }} value={tipoUsuario} className='form-control' onChange={handleTipoUsuarioChange}>
               <option>Tipo Usuário</option>
               <option value="admin">Admin</option>
               <option value="usuario">Usuário</option>
             </select>
           </div>
 
-          <button onClick={filtrarTipo}>Filtrar</button>
+          <button className='btn btn-secondary' onClick={filtrarTipo}>Filtrar</button>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 class AuthService {
   static async login(usuario, senha) {
     const apiUrl = 'https://localhost:7201/api/Login/login';
-   
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -14,13 +13,12 @@ class AuthService {
         }),
 
       });
-
-
-
+      const data = await response.json();
       if (!response.ok) {
         throw new Error('Login failed');
       } else {
         console.log("Deu certo!")
+        return data;
       }
 
     } catch (error) {
@@ -70,7 +68,7 @@ class AuthService {
   }
 
 
-  static async cadastroProduto(nome, valor, quantidade,marca) {
+  static async cadastroProduto(nome, valor, quantidade, marca) {
     const apiUrl = 'https://localhost:7201/api/Produtos/cadastroProduto';
 
     try {
@@ -109,7 +107,7 @@ class AuthService {
 
   static async deletarProduto(id) {
     const apiUrl = `https://localhost:7201/api/Produtos/${id}`;
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: 'DELETE',
@@ -120,12 +118,12 @@ class AuthService {
           id
         }),
       });
-  
+
       // Verifica o status da resposta
       if (!response.ok) {
         throw new Error('delete produto failed');
       }
-  
+
       // Se a resposta estiver ok, verifica se há conteúdo e faz o reload
       if (response.status === 204 || response.status === 200) {
         window.location.reload();
@@ -139,7 +137,7 @@ class AuthService {
   }
 
 
-  static async editarProduto(id,nome, valor, quantidade,marca) {
+  static async editarProduto(id, nome, valor, quantidade, marca) {
     const apiUrl = `https://localhost:7201/api/Produtos/${id}`;
 
     try {
@@ -165,10 +163,10 @@ class AuthService {
       if (!response.ok) {
         throw new Error('Edit produto failed');
       }
-  
+
 
       if (response.status === 204 || response.status === 200) {
-       console.log("Atualizado com sucesso!")
+        console.log("Atualizado com sucesso!")
       } else {
         throw new Error('Edit produto failed');
       }
@@ -180,7 +178,7 @@ class AuthService {
   }
 
 
-  static async editarUsuario(id,usuario, senha, tipo,cpf,dataNascimento) {
+  static async editarUsuario(id, usuario, senha, tipo, cpf, dataNascimento) {
     const apiUrl = `https://localhost:7201/api/Login/${id}`;
 
     try {
@@ -207,10 +205,10 @@ class AuthService {
       if (!response.ok) {
         throw new Error('Edit login failed');
       }
-  
+
 
       if (response.status === 204 || response.status === 200) {
-       console.log("Atualizado com sucesso!")
+        console.log("Atualizado com sucesso!")
       } else {
         throw new Error('Edit login failed');
       }

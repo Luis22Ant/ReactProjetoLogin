@@ -7,6 +7,7 @@ import CadastroProduto from "./Components/cadastroProduto";
 import EditarProduto from "./Components/editarProduto";
 import TableUsuario from "./Components/tableInfoUsuario";
 import CadastroEdit from "./Components/editarUsuario";
+import AcessoUsuario from "./Components/acessoUsuario";
 
 
 
@@ -22,8 +23,9 @@ const Router = () => {
         <Route path="/table" element={<Table />} />
         <Route path="/cadastroProduto" element={<CadastroProduto />} />
         <Route path="/editarProduto/:id" element={<EditarProduto />} />
-        <Route path="/tableUsuario" element={<TableUsuario/>} />
-        <Route path="/cadastroEdit/:id" element={<CadastroEdit/>} />
+        <Route path="/tableUsuario" element={<TableUsuario />} />
+        <Route path="/acessoUsuario" element={<AcessoUsuario />} />
+        <Route path="/cadastroEdit/:id" element={<CadastroEdit />} />
       </Routes>
     </BrowserRouter>
   );

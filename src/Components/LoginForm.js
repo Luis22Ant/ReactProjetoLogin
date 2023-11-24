@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // Adicionado estado para controlar a mensagem de erro
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -17,10 +17,13 @@ function LoginForm() {
     try {
       const response = await AuthService.login(username, password);
       console.log('Login successful', response);
-      navigate('/table');
+      if (response && response.tipo === 'admin') {
+        navigate('/table');
+      } else {
+        navigate('/acessoUsuario');
+      }
     } catch (error) {
-      console.error('Login failed', error);
-      // Atualiza o estado do erro para exibir a mensagem
+      console.error('Login falhou', error);
       setError('Usuário não cadastrado!');
     }
   };
@@ -53,7 +56,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {/* Exibe a mensagem de erro se houver um erro */}
+        { }
         {error && (
           <div style={{ marginBottom: '1vh', textAlign: 'center', color: 'red', fontSize: '14px' }}>
             {error}

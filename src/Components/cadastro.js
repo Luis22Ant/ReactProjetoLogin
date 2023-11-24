@@ -33,7 +33,7 @@ const CadastroForm = () => {
     e.preventDefault();
 
     try {
-      // Chamar o método AuthService.cadastro com os dados do formulário
+
       const response = await AuthService.cadastro(
         formValues.Usuario,
         formValues.Senha,
@@ -43,10 +43,10 @@ const CadastroForm = () => {
       );
 
       console.log('Cadastrado com sucesso', response);
-      // Você pode adicionar lógica aqui, como redirecionar para outra página após o cadastro bem-sucedido.
+
     } catch (error) {
       console.error('Erro no cadastro', error);
-      // Lógica para lidar com falhas no cadastro, como exibir uma mensagem de erro.
+
     }
   };
 
@@ -68,7 +68,7 @@ const CadastroForm = () => {
             <input type="text" className="form-control" name="CPF" value={formValues.CPF} onChange={handleChange} />
           </div>
           <div className="col-md-6" style={{ textAlign: 'center' }}>
-            <FontAwesomeIcon style={{ height: '10vh' }} icon={faUser} />
+            <FontAwesomeIcon style={{ height: '18vh' }} icon={faUser} />
           </div>
         </div>
 

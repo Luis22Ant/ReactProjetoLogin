@@ -32,7 +32,7 @@ const CadastroProduto = () => {
     e.preventDefault();
 
     try {
-      // Chamar o método AuthService.cadastro com os dados do formulário
+
       const response = await AuthService.cadastroProduto(
         formValues.Nome,
         formValues.Valor,
@@ -41,11 +41,11 @@ const CadastroProduto = () => {
       );
 
       console.log('Produto cadastrado com sucesso', response);
-      // Adicionar lógica para redirecionar para outra página após o cadastro bem-sucedido
+
       navigate('/table');
     } catch (error) {
       console.error('Erro no cadastro', error);
-      // Adicionar lógica para lidar com falhas no cadastro, como exibir uma mensagem de erro.
+     
     }
   };
 

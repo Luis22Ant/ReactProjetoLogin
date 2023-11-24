@@ -48,15 +48,15 @@ const EditarProduto = () => {
     e.preventDefault();
 
     try {
-      // Chamar o método AuthService.editarProduto com os dados do formulário
+   
       const response = await AuthService.editarProduto(id, formValues.nome, formValues.valor, formValues.quantidade, formValues.marca);
 
       console.log('Produto atualizado com sucesso', response);
-      // Adicionar lógica para redirecionar para outra página após a edição bem-sucedida
+    
       navigate('/table');
     } catch (error) {
       console.error('Erro na atualização', error);
-      // Adicionar lógica para lidar com falhas na edição, como exibir uma mensagem de erro.
+ 
     }
   };
 
