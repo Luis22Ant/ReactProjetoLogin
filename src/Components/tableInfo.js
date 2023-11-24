@@ -121,7 +121,7 @@ const Table = () => {
 
       <div style={conteudoEstilo}>
         <table style={tabelaEstilo}>
-          <thead>
+          <thead style={{position:'sticky',top:'0px'}}>
             <tr>
               <th style={celulaEstilo}> </th>
               <th style={celulaEstilo}></th>

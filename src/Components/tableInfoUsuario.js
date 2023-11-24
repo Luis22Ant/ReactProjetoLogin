@@ -8,6 +8,11 @@ import axios from 'axios';
 const TableUsuario = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [tipoUsuario, setTipoUsuario] = useState('');
+
+  const handleTipoUsuarioChange = (event) => {
+    setTipoUsuario(event.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,9 +30,14 @@ const TableUsuario = () => {
     navigate('/login');
   };
 
-  const botaoIncluir = () => {
-    navigate('/cadastroProduto');
-  };
+  const filtrarTipo = () => {
+    try {
+
+    } catch (erro) {
+
+    }
+  }
+
 
   const telaEdicao = (id) => {
     navigate(`/cadastroEdit/${id}`);
@@ -98,7 +108,7 @@ const TableUsuario = () => {
     <div className={styles.container} style={containerEstilo}>
       <nav className={styles.menu}>
         <div style={{ marginRight: '85%' }}>
-        <FontAwesomeIcon style={{ height: '10vh' }} icon={faUser} />
+          <FontAwesomeIcon style={{ height: '10vh' }} icon={faUser} />
         </div>
 
         <li className={styles.menuItem}>
@@ -108,7 +118,24 @@ const TableUsuario = () => {
           <Link to="/tableUsuario">Usuários</Link>
         </li>
       </nav>
-      <h2 style={{ marginLeft: '2vh' }}>Usuários</h2>
+      <div className='col-md-12' style={{ display: 'flex' }}>
+        <div className='col-md-6'>
+          <h2 style={{ marginLeft: '2vh' }}>Usuários</h2>
+        </div>
+        <div className='col-md-4' style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
+          <div style={{ marginRight: '2vh' }}>
+            <select value={tipoUsuario} onChange={handleTipoUsuarioChange}>
+              <option>Tipo Usuário</option>
+              <option value="admin">Admin</option>
+              <option value="usuario">Usuário</option>
+            </select>
+          </div>
+
+          <button onClick={filtrarTipo}>Filtrar</button>
+        </div>
+      </div>
+
+
 
       <div style={conteudoEstilo}>
         <table style={tabelaEstilo}>
