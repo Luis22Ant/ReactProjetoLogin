@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil, faTrash, faBox, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faTrash, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Table.module.css';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Table = () => {
+const TableUsuario = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7201/api/Produtos');
+        const response = await axios.get('https://localhost:7201/api/Login');
         setData(response.data);
       } catch (error) {
         console.error('Erro ao buscar dados da API', error);
@@ -30,7 +30,7 @@ const Table = () => {
   };
 
   const telaEdicao = (id) => {
-    navigate(`/editarProduto/${id}`);
+    navigate(`/cadastroEdit/${id}`);
   };
 
   const deletarRegistro = async (id) => {
@@ -38,7 +38,7 @@ const Table = () => {
       // Adicione a lógica de exclusão aqui
 
       // Após a exclusão bem-sucedida, recarrega os dados ou atualiza o estado conforme necessário
-      const response = await axios.delete(`https://localhost:7201/api/Produtos/${id}`);
+      const response = await axios.delete(`https://localhost:7201/api/login/${id}`);
       console.log('Delete successful', response);
       const newData = data.filter(item => item.id !== id);
       setData(newData);
@@ -98,7 +98,7 @@ const Table = () => {
     <div className={styles.container} style={containerEstilo}>
       <nav className={styles.menu}>
         <div style={{ marginRight: '85%' }}>
-          <FontAwesomeIcon style={{ height: '10vh' }} icon={faBox} />
+        <FontAwesomeIcon style={{ height: '10vh' }} icon={faUser} />
         </div>
 
         <li className={styles.menuItem}>
@@ -108,16 +108,7 @@ const Table = () => {
           <Link to="/tableUsuario">Usuários</Link>
         </li>
       </nav>
-
-      <button
-        className="btn btn-primary"
-        style={{ marginBottom: '2vh', width: '12vh', marginLeft: '2vh', marginTop: '2vh' }}
-        onClick={botaoIncluir}
-      >
-        Incluir
-      </button>
-
-      <h2 style={{ marginLeft: '2vh' }}>Tabela de Produtos</h2>
+      <h2 style={{ marginLeft: '2vh' }}>Usuários</h2>
 
       <div style={conteudoEstilo}>
         <table style={tabelaEstilo}>
@@ -126,11 +117,11 @@ const Table = () => {
               <th style={celulaEstilo}> </th>
               <th style={celulaEstilo}></th>
               <th style={celulaEstilo}>ID</th>
-              <th style={celulaEstilo}>NOME</th>
-              <th style={celulaEstilo}>VALOR</th>
-              <th style={celulaEstilo}>QUANTIDADE</th>
-              <th style={celulaEstilo}>MARCA</th>
-              <th style={celulaEstilo}>DATA DO CADASTRO</th>
+              <th style={celulaEstilo}>USUÁRIO</th>
+              <th style={celulaEstilo}>TIPO</th>
+              <th style={celulaEstilo}>CPF</th>
+              <th style={celulaEstilo}>HORA DO CADASTRO</th>
+              <th style={celulaEstilo}>DATA DE NASCIMENTO</th>
             </tr>
           </thead>
           <tbody>
@@ -143,11 +134,11 @@ const Table = () => {
                   <FontAwesomeIcon style={{ cursor: 'pointer' }} onClick={() => deletarRegistro(item.id)} icon={faTrash} />
                 </td>
                 <td style={infoEstilo}>{item.id}</td>
-                <td style={infoEstilo}>{item.nome}</td>
-                <td style={infoEstilo}>{item.valor}</td>
-                <td style={infoEstilo}>{item.quantidade}</td>
-                <td style={infoEstilo}>{item.marca}</td>
-                <td style={infoEstilo}>{item.dataCadastro}</td>
+                <td style={infoEstilo}>{item.usuario}</td>
+                <td style={infoEstilo}>{item.tipo}</td>
+                <td style={infoEstilo}>{item.cpf}</td>
+                <td style={infoEstilo}>{item.horaCadastro}</td>
+                <td style={infoEstilo}>{item.dataNascimento}</td>
               </tr>
             ))}
           </tbody>
@@ -161,4 +152,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default TableUsuario;

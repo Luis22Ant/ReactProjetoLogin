@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthService from '../Services/AuthService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../LoginForm.module.css';
 import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const CadastroProduto = () => {
+const EditarProduto = () => {
   const [formValues, setFormValues] = useState({
     Nome: '',
     Valor: '',
@@ -15,6 +15,22 @@ const CadastroProduto = () => {
   });
 
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchProduto = async () => {
+      try {
+        const response = await AuthService.editarProduto(id);
+
+        // Atualize o estado com os dados do produto
+        setFormValues(response);  // Ajuste aqui para setar diretamente os dados do produto
+      } catch (error) {
+        console.error('Erro ao buscar dados do produto', error);
+      }
+    };
+
+    fetchProduto();
+  }, [id]);
 
   const botaoVoltar = () => {
     navigate('/table');
@@ -32,26 +48,21 @@ const CadastroProduto = () => {
     e.preventDefault();
 
     try {
-      // Chamar o método AuthService.cadastro com os dados do formulário
-      const response = await AuthService.cadastroProduto(
-        formValues.Nome,
-        formValues.Valor,
-        formValues.Quantidade,
-        formValues.Marca
-      );
+      // Chamar o método AuthService.editarProduto com os dados do formulário
+      const response = await AuthService.editarProduto(id, formValues.Nome,formValues.Valor,formValues.Quantidade,formValues.Marca);
 
-      console.log('Produto cadastrado com sucesso', response);
-      // Adicionar lógica para redirecionar para outra página após o cadastro bem-sucedido
+      console.log('Produto atualizado com sucesso', response);
+      // Adicionar lógica para redirecionar para outra página após a edição bem-sucedida
       navigate('/table');
     } catch (error) {
-      console.error('Erro no cadastro', error);
-      // Adicionar lógica para lidar com falhas no cadastro, como exibir uma mensagem de erro.
+      console.error('Erro na atualização', error);
+      // Adicionar lógica para lidar com falhas na edição, como exibir uma mensagem de erro.
     }
   };
 
   return (
     <div className={`container ${styles.teste}`}>
-      <h1 style={{ textAlign: 'center' }}>Cadastrar Produto</h1>
+      <h1 style={{ textAlign: 'center' }}>Editar Produto</h1>
       <form onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label className="form-label">Nome:</label>
@@ -66,7 +77,6 @@ const CadastroProduto = () => {
             <FontAwesomeIcon style={{ height: '10vh' }} icon={faBoxOpen} />
           </div>
         </div>
-
         <div className="col-md-6" style={{ marginBottom: '2vh' }}>
           <label className="form-label">Quantidade:</label>
           <input type="text" className="form-control" name="Quantidade" value={formValues.Quantidade} onChange={handleChange} />
@@ -83,10 +93,9 @@ const CadastroProduto = () => {
             Voltar
           </button>
         </div>
-
-      </form >
-    </div >
+      </form>
+    </div>
   );
 };
 
-export default CadastroProduto;
+export default EditarProduto;

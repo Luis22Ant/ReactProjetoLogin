@@ -81,8 +81,8 @@ const CadastroForm = () => {
             <label className="form-label"></label>
             <select type="text" className="form-control" name="Tipo" value={formValues.Tipo} onChange={handleChange}>
               <option value="">Tipo</option>
-              <option value="admin">Admin</option>
-              <option value="usuario">Usuário</option>
+              <option value="Admin">Admin</option>
+              <option value="Usuario">Usuário</option>
             </select>
           </div>
 

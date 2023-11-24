@@ -17,7 +17,7 @@ function LoginForm() {
     try {
       const response = await AuthService.login(username, password);
       console.log('Login successful', response);
-      // Você pode adicionar lógica aqui, como redirecionar para outra página após o login bem-sucedido.
+      navigate('/table');
     } catch (error) {
       console.error('Login failed', error);
       // Atualiza o estado do erro para exibir a mensagem
