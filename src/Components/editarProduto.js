@@ -5,31 +5,31 @@ import styles from '../LoginForm.module.css';
 import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 const EditarProduto = () => {
   const [formValues, setFormValues] = useState({
-    Nome: '',
-    Valor: '',
+    nome: '',
+    valor: '',
     Quantidade: '',
-    Marca: '',
+    marca: '',
   });
+
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchProduto = async () => {
+    const fetchData = async () => {
       try {
-        const response = await AuthService.editarProduto(id);
-
-        // Atualize o estado com os dados do produto
-        setFormValues(response);  // Ajuste aqui para setar diretamente os dados do produto
+        const response = await axios.get(`https://localhost:7201/api/Produtos/${id}`);
+        console.log(response.data);
+        setFormValues(response.data);
       } catch (error) {
-        console.error('Erro ao buscar dados do produto', error);
+        console.error('Erro ao buscar dados da API', error);
       }
     };
-
-    fetchProduto();
+    fetchData();
   }, [id]);
 
   const botaoVoltar = () => {
@@ -49,7 +49,7 @@ const EditarProduto = () => {
 
     try {
       // Chamar o método AuthService.editarProduto com os dados do formulário
-      const response = await AuthService.editarProduto(id, formValues.Nome,formValues.Valor,formValues.Quantidade,formValues.Marca);
+      const response = await AuthService.editarProduto(id, formValues.nome, formValues.valor, formValues.quantidade, formValues.marca);
 
       console.log('Produto atualizado com sucesso', response);
       // Adicionar lógica para redirecionar para outra página após a edição bem-sucedida
@@ -64,27 +64,15 @@ const EditarProduto = () => {
     <div className={`container ${styles.teste}`}>
       <h1 style={{ textAlign: 'center' }}>Editar Produto</h1>
       <form onSubmit={handleSubmit}>
-        <div className="col-md-6">
-          <label className="form-label">Nome:</label>
-          <input type="text" className="form-control" name="Nome" value={formValues.Nome} onChange={handleChange} />
-        </div>
-        <div className="col-md-12" style={{ display: 'flex' }}>
+      {Object.keys(formValues).map((key) =>   (key !== 'id' && key !== 'isDelete' && key !== 'dataCadastro') && (
           <div className="col-md-6">
-            <label className="form-label">Valor:</label>
-            <input type="text" className="form-control" name="Valor" value={formValues.Valor} onChange={handleChange} />
+            <label className="form-label">{key}:</label>
+            <input type="text" className="form-control" name={key} value={formValues[key]} onChange={handleChange} />
           </div>
-          <div className="col-md-6" style={{ textAlign: 'center' }}>
-            <FontAwesomeIcon style={{ height: '10vh' }} icon={faBoxOpen} />
+        ))}
+         <div className="col-md-9" style={{ textAlign: 'right',position:'absolute',top:'33vh' }}>
+            <FontAwesomeIcon style={{ height: '1vh' }} icon={faBoxOpen} />
           </div>
-        </div>
-        <div className="col-md-6" style={{ marginBottom: '2vh' }}>
-          <label className="form-label">Quantidade:</label>
-          <input type="text" className="form-control" name="Quantidade" value={formValues.Quantidade} onChange={handleChange} />
-        </div>
-        <div className="col-md-6" style={{ marginBottom: '2vh' }}>
-          <label className="form-label">Marca:</label>
-          <input type="text" className="form-control" name="Marca" value={formValues.Marca} onChange={handleChange} />
-        </div>
         <div style={{ marginTop: '3%' }}>
           <button type="submit" className="btn btn-primary">
             Confirmar
@@ -99,3 +87,9 @@ const EditarProduto = () => {
 };
 
 export default EditarProduto;
+
+
+
+
+
+

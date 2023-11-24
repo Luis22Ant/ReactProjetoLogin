@@ -5,34 +5,20 @@ import styles from '../LoginForm.module.css';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 const CadastroEdit = () => {
     const [formValues, setFormValues] = useState({
-        Usuario: '',
-        Senha: '',
-        Tipo: '',
-        CPF: '',
-        DataNascimento: '',
+        usuario: '',
+        senha: '',
+        tipo: '',
+        cpf: '',
+        dataNascimento: '',
     });
+    
 
     // Obtenha o id dos parâmetros de rota
     const { id } = useParams();
-
-    useEffect(() => {
-        const fetchUsuario = async () => {
-            try {
-                // Use o id obtido dos parâmetros da rota
-                const response = await AuthService.editarUsuario(id);
-
-                // Atualize o estado com os dados do usuário
-                setFormValues(response);
-            } catch (error) {
-                console.error('Erro ao buscar dados do usuário', error);
-            }
-        };
-
-        fetchUsuario();
-    }, [id]);
 
     const navigate = useNavigate();
 
@@ -47,18 +33,29 @@ const CadastroEdit = () => {
             [name]: value,
         });
     };
-
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`https://localhost:7201/api/Login/${id}`);
+            console.log(response.data);
+            setFormValues(response.data);
+          } catch (error) {
+            console.error('Erro ao buscar dados da API', error);
+          }
+        };
+        fetchData();
+      }, [id]);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const response = await AuthService.editarUsuario(
                 id,
-                formValues.Usuario,
-                formValues.Senha,
-                formValues.Tipo,
-                formValues.CPF,
-                formValues.DataNascimento
+                formValues.usuario,
+                formValues.senha,
+                formValues.tipo,
+                formValues.cpf,
+                formValues.dataNascimento
             );
 
             console.log('Atualizado com sucesso', response);
@@ -73,44 +70,24 @@ const CadastroEdit = () => {
         <div className={`container ${styles.teste}`} >
             <h1 style={{ textAlign: 'center' }}>Editar Usuário</h1>
             <form onSubmit={handleSubmit}>
+            {Object.keys(formValues).map((key) =>(key !== 'id' && key !== 'horaCadastro') && (
                 <div className="col-md-6">
-                    <label className="form-label">Usuário:</label>
-                    <input type="text" className="form-control" name="Usuario" value={formValues.Usuario} onChange={handleChange} />
+                    <label className="form-label">{key}:</label>
+                    <input type="text" className="form-control" name={key} value={formValues[key]} onChange={handleChange} />
                 </div>
-                <div className="col-md-6">
-                    <label className="form-label">Senha:</label>
-                    <input type="password" className="form-control" name="Senha" value={formValues.Senha} onChange={handleChange} />
-                </div>
-                <div className="col-md-12" style={{ display: 'flex' }}>
-                    <div className="col-md-6">
-                        <label className="form-label">CPF:</label>
-                        <input type="text" className="form-control" name="CPF" value={formValues.CPF} onChange={handleChange} />
+                   ))}
+                <div className="col-md-9" style={{ textAlign: 'right',position:'absolute',top:'34vh'}}>
+                        <FontAwesomeIcon style={{ height: '18vh' }} icon={faUser} />
                     </div>
-                    <div className="col-md-6" style={{ textAlign: 'center' }}>
-                        <FontAwesomeIcon style={{ height: '10vh' }} icon={faUser} />
-                    </div>
-                </div>
-
-                <div className="col-md-6" >
-                    <label className="form-label">Data de Nascimento:</label>
-                    <input type="text" className="form-control" placeholder='dd/mm/yyyy' name="DataNascimento" value={formValues.DataNascimento} onChange={handleChange} />
-                </div>
-                <div className="col-md-12" style={{ marginBottom: '2vh' }}>
-                    <div className="col-md-6">
-                        <label className="form-label"></label>
-                        <select type="text" className="form-control" name="Tipo" value={formValues.Tipo} onChange={handleChange}>
-                            <option value="">Tipo</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Usuario">Usuário</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
+                    <div style={{marginTop: '2vh'  }}>
+                    <button type="submit" className="btn btn-primary" >
                     Confirmar
                 </button>&nbsp;&nbsp;&nbsp;
                 <button onClick={botaoVoltar} type="submit" className="btn btn-secondary">
                     Voltar
                 </button>
+                    </div>
+          
             </form>
         </div>
     );
